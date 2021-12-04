@@ -143,6 +143,7 @@ void CCollidManager::Collision_Rect_BombWaveToMonster(list<CObj*>& _Dst, list<CO
 				//Dst->Set_Dead();
 
 				Src->SetState(OBJSTATE::HIT);
+				//Src->SetState(OBJSTATE::DEAD);
 
 				//dynamic_cast<CBombWave*>(Dst)->SetCollid();
 			}

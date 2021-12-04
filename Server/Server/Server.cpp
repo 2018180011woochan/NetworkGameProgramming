@@ -237,13 +237,13 @@ void Receive_Data(LPVOID arg, map<int, ClientInfo> _worldInfo)
 	addrlen = sizeof(clientaddr);
 	getpeername(client_sock, (SOCKADDR*)&clientaddr, &addrlen);
 
-	// 고정 길이 데이터 받아오기
+	// # 1. 고정 길이 데이터 받아오기
 	retval = recvn(client_sock, (char*)&ClientInfo, sizeof(CLIENTINFO), 0);
 	if (retval == SOCKET_ERROR) {
 		err_display("recv()");
 	}
 
-	// 게임 시작했는지 확인하는 변수 받아오기
+	// # 2. 게임 시작했는지 확인하는 변수 받아오기
 	int iStart;
 	retval = recvn(client_sock, (char*)&iStart, sizeof(int), 0);
 	if (retval == SOCKET_ERROR) {
@@ -253,6 +253,35 @@ void Receive_Data(LPVOID arg, map<int, ClientInfo> _worldInfo)
 		isStart = true;
 		isSetTimer = true;
 		//CTimeManager::Get_Instance()->Ready_CTimeManager();
+	}
+
+	// # 3. 몬스터 정보 
+	if (isStart) {
+		int iMonsterCnt = -1;
+		retval = recvn(client_sock, (char*)&iMonsterCnt, sizeof(int), 0);
+		if (retval == SOCKET_ERROR) {
+			err_display("recv()");
+		}
+
+		for (int i = 0; i < iMonsterCnt; ++i) {
+			retval = recvn(client_sock, (char*)&vecMonster[i], sizeof(MONSTERINFO), 0);
+			if (retval == SOCKET_ERROR) {
+				err_display("recv()");
+			}
+		}
+
+		list<CObj*> monsterList = CObjManager::Get_Instance()->Get_MonsterList();
+		int iNum = 0;
+		for (auto iter = monsterList.begin(); iter != monsterList.end(); ++iter) {
+			if (vecMonster[iNum].MonsterDead) {
+				vecMonster.erase(vecMonster.begin() + iNum);
+				SAFE_DELETE(*iter);
+				iter = monsterList.erase(iter);
+			}
+			++iNum;
+		}
+
+		CObjManager::Get_Instance()->Set_MonsterList(monsterList);
 	}
 
 	auto iter = mapClientPort.find(clientaddr.sin_port);
@@ -338,62 +367,29 @@ void Send_Data(LPVOID arg)
 	if (isStart) {
 		// 업데이트된 몬스터들 위치
 		list<CObj*>	listMonster = CObjManager::Get_Instance()->Get_MonsterList();
-		int i = 0;
+		int iNum = 0, iSendCnt = 0;
 		int iCnt = listMonster.size();
 
 		for (auto iter = listMonster.begin(); iter != listMonster.end(); ++iter)
 		{
-			vecMonster[i].MonsterPos.fX = (*iter)->Get_Info().fX;
-			vecMonster[i].MonsterPos.fY = (*iter)->Get_Info().fY;
-			vecMonster[i].MonsterDir = (*iter)->GetDir();
-			vecMonster[i].Monsterframe = (*iter)->Get_Frame();
-			++i;
+			vecMonster[iNum].MonsterPos.fX = (*iter)->Get_Info().fX;
+			vecMonster[iNum].MonsterPos.fY = (*iter)->Get_Info().fY;
+			vecMonster[iNum].MonsterDir = (*iter)->GetDir();
+			vecMonster[iNum].Monsterframe = (*iter)->Get_Frame();
+			++iNum;
 		}
 
-		retval = send(client_sock, (char*)&iCnt, sizeof(int), 0);
+		retval = send(client_sock, (char*)&iNum, sizeof(int), 0);
 		if (retval == SOCKET_ERROR) {
 			err_display("send()");
 		}
 
-		for (int i = 0; i < iCnt; ++i) {
+		for (int i = 0; i < iNum; ++i) {
 			retval = send(client_sock, (char*)&vecMonster[i], sizeof(MONSTERINFO), 0);
 			if (retval == SOCKET_ERROR) {
 				err_display("send()");
 			}
 		}
-
-		/*retval = send(client_sock, (char*)&vecMonster[0], sizeof(MONSTERINFO), 0);
-		if (retval == SOCKET_ERROR) {
-			err_display("send()");
-		}
-		retval = send(client_sock, (char*)&vecMonster[1], sizeof(MONSTERINFO), 0);
-		if (retval == SOCKET_ERROR) {
-			err_display("send()");
-		}
-		retval = send(client_sock, (char*)&vecMonster[2], sizeof(MONSTERINFO), 0);
-		if (retval == SOCKET_ERROR) {
-			err_display("send()");
-		}
-		retval = send(client_sock, (char*)&vecMonster[3], sizeof(MONSTERINFO), 0);
-		if (retval == SOCKET_ERROR) {
-			err_display("send()");
-		}
-		retval = send(client_sock, (char*)&vecMonster[4], sizeof(MONSTERINFO), 0);
-		if (retval == SOCKET_ERROR) {
-			err_display("send()");
-		}
-		retval = send(client_sock, (char*)&vecMonster[5], sizeof(MONSTERINFO), 0);
-		if (retval == SOCKET_ERROR) {
-			err_display("send()");
-		}
-		retval = send(client_sock, (char*)&vecMonster[6], sizeof(MONSTERINFO), 0);
-		if (retval == SOCKET_ERROR) {
-			err_display("send()");
-		}
-		retval = send(client_sock, (char*)&vecMonster[7], sizeof(MONSTERINFO), 0);
-		if (retval == SOCKET_ERROR) {
-			err_display("send()");
-		}*/
 	}
 
 	//else
@@ -520,6 +516,7 @@ void Init_Monster(LPVOID arg)
 	tInfo.MonsterPos.fY = MAPSTARTY + (TILECY * 6) + (TILECY >> 1);
 	tInfo.MonsterDir = OBJDIR::BOTTOM;
 	tInfo.MonsterID = 1;
+	tInfo.MonsterDead = false;
 	vecMonster.emplace_back(tInfo);
 
 	pObj = CAbstractFactory<CMessi>::Create_Monster(MAPSTARTX + (TILECX * 12) + (TILECX >> 1), MAPSTARTY + (TILECY * 6) + (TILECY >> 1), OBJDIR::BOTTOM);
@@ -529,6 +526,7 @@ void Init_Monster(LPVOID arg)
 	tInfo.MonsterPos.fY = MAPSTARTY + (TILECY * 6) + (TILECY >> 1);
 	tInfo.MonsterDir = OBJDIR::BOTTOM;
 	tInfo.MonsterID = 2;
+	tInfo.MonsterDead = false;
 	vecMonster.emplace_back(tInfo);
 
 	pObj = CAbstractFactory<CMessi>::Create_Monster(MAPSTARTX + (TILECX * 8) + (TILECX >> 1), MAPSTARTY + (TILECY * 0) + (TILECY >> 1), OBJDIR::LEFT);
@@ -538,6 +536,7 @@ void Init_Monster(LPVOID arg)
 	tInfo.MonsterPos.fY = MAPSTARTY + (TILECY * 0) + (TILECY >> 1);
 	tInfo.MonsterDir = OBJDIR::LEFT;
 	tInfo.MonsterID = 3;
+	tInfo.MonsterDead = false;
 	vecMonster.emplace_back(tInfo);
 
 	pObj = CAbstractFactory<CMessi>::Create_Monster(MAPSTARTX + (TILECX * 8) + (TILECX >> 1), MAPSTARTY + (TILECY * 2) + (TILECY >> 1), OBJDIR::BOTTOM);
@@ -547,6 +546,7 @@ void Init_Monster(LPVOID arg)
 	tInfo.MonsterPos.fY = MAPSTARTY + (TILECY * 2) + (TILECY >> 1);
 	tInfo.MonsterDir = OBJDIR::BOTTOM;
 	tInfo.MonsterID = 4;
+	tInfo.MonsterDead = false;
 	vecMonster.emplace_back(tInfo);
 
 	pObj = CAbstractFactory<CMessi>::Create_Monster(MAPSTARTX + (TILECX * 0) + (TILECX >> 1), MAPSTARTY + (TILECY * 6) + (TILECY >> 1), OBJDIR::RIGHT);
@@ -556,6 +556,7 @@ void Init_Monster(LPVOID arg)
 	tInfo.MonsterPos.fY = MAPSTARTY + (TILECY * 6) + (TILECY >> 1);
 	tInfo.MonsterDir = OBJDIR::RIGHT;
 	tInfo.MonsterID = 5;
+	tInfo.MonsterDead = false;
 	vecMonster.emplace_back(tInfo);
 
 	pObj = CAbstractFactory<CMessi>::Create_Monster(MAPSTARTX + (TILECX * 3) + (TILECX >> 1), MAPSTARTY + (TILECY * 6) + (TILECY >> 1), OBJDIR::BOTTOM);
@@ -565,6 +566,7 @@ void Init_Monster(LPVOID arg)
 	tInfo.MonsterPos.fY = MAPSTARTY + (TILECY * 6) + (TILECY >> 1);
 	tInfo.MonsterDir = OBJDIR::BOTTOM;
 	tInfo.MonsterID = 6;
+	tInfo.MonsterDead = false;
 	vecMonster.emplace_back(tInfo);
 	//
 	pObj = CAbstractFactory<CMessi>::Create_Monster(MAPSTARTX + (TILECX * 7) + (TILECX >> 1), MAPSTARTY + (TILECY * 10) + (TILECY >> 1), OBJDIR::LEFT);
@@ -574,6 +576,7 @@ void Init_Monster(LPVOID arg)
 	tInfo.MonsterPos.fY = MAPSTARTY + (TILECY * 10) + (TILECY >> 1);
 	tInfo.MonsterDir = OBJDIR::LEFT;
 	tInfo.MonsterID = 7;
+	tInfo.MonsterDead = false;
 	vecMonster.emplace_back(tInfo);
 
 	pObj = CAbstractFactory<CMessi>::Create_Monster(MAPSTARTX + (TILECX * 7) + (TILECX >> 1), MAPSTARTY + (TILECY * 12) + (TILECY >> 1), OBJDIR::TOP);
@@ -583,6 +586,7 @@ void Init_Monster(LPVOID arg)
 	tInfo.MonsterPos.fY = MAPSTARTY + (TILECY * 12) + (TILECY >> 1);
 	tInfo.MonsterDir = OBJDIR::TOP;
 	tInfo.MonsterID = 8;
+	tInfo.MonsterDead = false;
 	vecMonster.emplace_back(tInfo);
 
 	int iNum = 8;

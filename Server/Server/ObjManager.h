@@ -53,7 +53,10 @@ public:
 
 	void Set_Cheat(bool _ischeat) { m_bisCheat = _ischeat; }
 	bool Get_Cheat() { return m_bisCheat; }
-	
+
+public:
+	void Set_MonsterList(list<CObj*>& listM) { m_listObj[OBJID::MONSTER] = listM; }
+
 public:
 	static CObjManager* Get_Instance()
 	{

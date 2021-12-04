@@ -52,8 +52,12 @@ public:
 	bool Get_Cheat() { return m_bisCheat; }
 
 	CObj* Get_Player() { return m_listObj[OBJID::PLAYER].front(); }
+
+public:
 	void Update_MonsterInfo(vector<MONSTERINFO> vInfo);
 	void Add_Monster(MONSTERINFO info, int iNum);
+	list<CObj*> Get_MonsterList() { return m_listObj[OBJID::MONSTER]; }
+	void Set_MonsterList(list<CObj*>& listM) { m_listObj[OBJID::MONSTER] = listM; }
 
 public:
 	static CObjManager* Get_Instance()
