@@ -85,5 +85,8 @@ private:
 	char buf[900] = "../111A_API_GameProject/";
 
 	bool bisStart = false;		// 게임 시작했는가
+
+	// 현재 필드에 남아있는 몬스터 수
+	int	iMonsterCnt = -1;
 };
 

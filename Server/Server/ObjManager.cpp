@@ -5,7 +5,7 @@
 //#include "StageMap.h"
 #include "Player.h"
 //#include "Bomb.h"
-#include "TileManager.h"
+//#include "TileManager.h"
 //#include "Basket.h"
 //#include "Leaf1.h"
 //#include "Leaf2.h"
@@ -18,7 +18,7 @@
 #include "Mbape.h"
 //#include "HMSon.h"
 //#include "BossBomb.h"
-#include "TimeManager.h"
+//#include "TimeManager.h"
 
 CObjManager* CObjManager::m_pInstance = nullptr;
 

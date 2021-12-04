@@ -6,7 +6,7 @@
 #include "ObjManager.h"
 #include "Mbape.h"
 #include "Messi.h"
-#include "TimeManager.h"
+//#include "TimeManager.h"
 
 #define BUFSIZE 500
 static int iClientID = 0;				// 클라이언트의 ID
@@ -128,7 +128,7 @@ DWORD WINAPI ProcessClient(LPVOID arg)
 		// 데이터 보내기
 		Send_Data((LPVOID)client_sock);
 
-		CTimeManager::Get_Instance()->Update_CTimeManager();
+		//CTimeManager::Get_Instance()->Update_CTimeManager();
 	}
 
 	closesocket(client_sock);
@@ -252,7 +252,7 @@ void Receive_Data(LPVOID arg, map<int, ClientInfo> _worldInfo)
 	if (iStart == 1 && !isSetTimer) {
 		isStart = true;
 		isSetTimer = true;
-		CTimeManager::Get_Instance()->Ready_CTimeManager();
+		//CTimeManager::Get_Instance()->Ready_CTimeManager();
 	}
 
 	auto iter = mapClientPort.find(clientaddr.sin_port);
@@ -350,7 +350,19 @@ void Send_Data(LPVOID arg)
 			++i;
 		}
 
-		retval = send(client_sock, (char*)&vecMonster[0], sizeof(MONSTERINFO), 0);
+		retval = send(client_sock, (char*)&iCnt, sizeof(int), 0);
+		if (retval == SOCKET_ERROR) {
+			err_display("send()");
+		}
+
+		for (int i = 0; i < iCnt; ++i) {
+			retval = send(client_sock, (char*)&vecMonster[i], sizeof(MONSTERINFO), 0);
+			if (retval == SOCKET_ERROR) {
+				err_display("send()");
+			}
+		}
+
+		/*retval = send(client_sock, (char*)&vecMonster[0], sizeof(MONSTERINFO), 0);
 		if (retval == SOCKET_ERROR) {
 			err_display("send()");
 		}
@@ -381,7 +393,7 @@ void Send_Data(LPVOID arg)
 		retval = send(client_sock, (char*)&vecMonster[7], sizeof(MONSTERINFO), 0);
 		if (retval == SOCKET_ERROR) {
 			err_display("send()");
-		}
+		}*/
 	}
 
 	//else

@@ -57,6 +57,7 @@ typedef struct MonsterInfo
 	OBJDIR::DIR			MonsterDir;			// 몬스터 방향
 	int					MonsterID;
 	FRAME				Monsterframe;
+	bool				MonsterDead;
 }MONSTERINFO;
 
 

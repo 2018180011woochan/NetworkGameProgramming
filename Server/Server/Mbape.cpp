@@ -146,62 +146,7 @@ void CMbape::Late_Update()
 
 void CMbape::Render(HDC _DC)
 {
-	//HDC hMemDC = CBmpManager::Get_Instance()->Find_Image(L"Mbape");
-	//HDC hMemDC2 = CBmpManager::Get_Instance()->Find_Image(L"Small_Mbape");
-
-	//if (OBJSTATE::IDLE == m_eState)
-	//{
-	//	switch (m_eCurDir)
-	//	{
-	//	case OBJDIR::TOP:
-	//		// 0 1
-	//		GdiTransparentBlt(_DC, m_tRect.left - 12, m_tRect.top - 60
-	//			, 76, 139, hMemDC
-	//			, m_tFrame.iFrameStart * 76, 0
-	//			, 76, 139
-	//			, RGB(255, 255, 255));
-	//		break;
-	//	case OBJDIR::BOTTOM:
-	//		// 2 3
-	//		GdiTransparentBlt(_DC, m_tRect.left - 12, m_tRect.top - 60
-	//			, 78, 139, hMemDC
-	//			, 78 * 2 + m_tFrame.iFrameStart * 78, 0
-	//			, 78, 139
-	//			, RGB(255, 255, 255));
-	//		break;
-	//	case OBJDIR::LEFT:
-	//		// 4 5
-	//		hMemDC = CBmpManager::Get_Instance()->Find_Image(L"Mbape_left");
-	//		GdiTransparentBlt(_DC, m_tRect.left - 12, m_tRect.top - 60
-	//			, 78, 139, hMemDC
-	//			, m_tFrame.iFrameStart * 78, 0
-	//			, 78, 139
-	//			, RGB(255, 255, 255));
-	//		break;
-	//	case OBJDIR::RIGHT:
-	//		// 6 7
-	//		GdiTransparentBlt(_DC, m_tRect.left - 12, m_tRect.top - 60
-	//			, 78, 139, hMemDC
-	//			, 78 * 4 + m_tFrame.iFrameStart * 78, 0
-	//			, 78, 139
-	//			, RGB(255, 255, 255));
-	//		break;
-	//	}
-	//}
-
-	//if (m_eState == OBJSTATE::HIT)
-	//{
-	//	m_tFrame.dwFrameSpeed = 800;
-	//	GdiTransparentBlt(_DC, m_tRect.left - 12, m_tRect.top - 20
-	//		, 53, 63, hMemDC2
-	//		, 29 + (53 * 4) + (69 * 4) + m_tFrame.iFrameStart * 53, 10
-	//		, 53, 63
-	//		, RGB(255, 255, 255));
-	//}
-
-
-	//if (CKeyManager::Get_Instance()->Key_Pressing(VK_LCONTROL))
-	//	Rectangle(_DC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+	
 }
 
 void CMbape::Release()

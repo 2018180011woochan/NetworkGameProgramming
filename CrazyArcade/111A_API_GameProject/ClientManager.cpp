@@ -94,18 +94,19 @@ int CClientManager::recvInfo()
 	
 	// 서버로부터 받을 몬스터 개수
 	if (bisStart) {
-		int iMonsterCnt = 0;
-		//retval = recvn(sock, (char*)&iMonsterCnt, sizeof(int), 0);
-		//if (retval == SOCKET_ERROR) {
-		//	err_display("recv()");
-		//}
-		//for (int i = 0; i < 10; ++i) {
-		//	retval = recvn(sock, (char*)&tMonsterInfo[i], sizeof(MONSTERINFO), 0);
-		//	if (retval == SOCKET_ERROR) {
-		//		err_display("recv()");
-		//	}
-		//}
-		retval = recvn(sock, (char*)&tMonsterInfo[0], sizeof(MONSTERINFO), 0);
+		retval = recvn(sock, (char*)&iMonsterCnt, sizeof(int), 0);
+		if (retval == SOCKET_ERROR) {
+			err_display("recv()");
+		}
+
+		for (int i = 0; i < iMonsterCnt; ++i) {
+			retval = recvn(sock, (char*)&tMonsterInfo[i], sizeof(MONSTERINFO), 0);
+			if (retval == SOCKET_ERROR) {
+				err_display("recv()");
+			}
+		}
+
+		/*retval = recvn(sock, (char*)&tMonsterInfo[0], sizeof(MONSTERINFO), 0);
 		if (retval == SOCKET_ERROR) {
 			err_display("recv()");
 		}
@@ -136,7 +137,7 @@ int CClientManager::recvInfo()
 		retval = recvn(sock, (char*)&tMonsterInfo[7], sizeof(MONSTERINFO), 0);
 		if (retval == SOCKET_ERROR) {
 			err_display("recv()");
-		}
+		}*/
 
 		if (CSceneManager::Get_Instance()->Get_CurScene() == CSceneManager::SCENEID::SCENE_STAGE_NETWORK) {
 			CObjManager::Get_Instance()->Update_MonsterInfo(tMonsterInfo);
@@ -207,13 +208,12 @@ void CClientManager::recvInitMapTile()
 
 void CClientManager::recvInitMonster()
 {
-	int iNum = 0;
-	retval = recvn(sock, (char*)&iNum, sizeof(int), 0);
+	retval = recvn(sock, (char*)&iMonsterCnt, sizeof(int), 0);
 	if (retval == SOCKET_ERROR) {
 		err_display("recv()");
 	}
 
-	tMonsterInfo.resize(iNum);
+	tMonsterInfo.resize(iMonsterCnt);
 
 	retval = recvn(sock, (char*)&tMonsterInfo[0], sizeof(MONSTERINFO), 0);
 	if (retval == SOCKET_ERROR) {

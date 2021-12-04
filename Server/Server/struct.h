@@ -56,6 +56,7 @@ typedef struct MonsterInfo
 	OBJDIR::DIR			MonsterDir;			// 몬스터 방향
 	int					MonsterID;
 	FRAME				Monsterframe;
+	bool				MonsterDead;		// 몬스터가 죽었는지
 }MONSTERINFO;
 
 typedef struct ClientInfo					// 서버로 전송할 각 클라이언트의 정보

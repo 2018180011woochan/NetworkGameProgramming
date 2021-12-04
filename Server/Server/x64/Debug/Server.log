@@ -5,6 +5,6 @@ C:\Users\고은비\Documents\NetworkGameProgramming\Server\Server\Server.cpp(11,
 C:\Users\고은비\Documents\NetworkGameProgramming\Server\Server\stdafx.h(27): message : 'BUFSIZE'의 이전 정의를 참조하십시오.
 C:\Users\고은비\Documents\NetworkGameProgramming\Server\Server\Server.cpp(90,7): warning C4101: 'buf' :참조되지 않은 지역 변수입니다.
 C:\Users\고은비\Documents\NetworkGameProgramming\Server\Server\Server.cpp(342,32): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\고은비\Documents\NetworkGameProgramming\Server\Server\Server.cpp(467,12): warning C4244: '초기화 중': 'std::streamoff'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\고은비\Documents\NetworkGameProgramming\Server\Server\Server.cpp(470,30): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\고은비\Documents\NetworkGameProgramming\Server\Server\Server.cpp(479,12): warning C4244: '초기화 중': 'std::streamoff'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\고은비\Documents\NetworkGameProgramming\Server\Server\Server.cpp(482,30): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   Server.vcxproj -> C:\Users\고은비\Documents\NetworkGameProgramming\CrazyArcade\Debug\Server.exe
