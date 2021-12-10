@@ -24,6 +24,7 @@ public:
 public:
 	float Get_PlayerX();
 	float Get_PlayerY();
+	RECT Get_PlayerSize();
 	float Get_BombX();
 	float Get_BombY();
 	bool Get_isBombPos(float _x, float _y);

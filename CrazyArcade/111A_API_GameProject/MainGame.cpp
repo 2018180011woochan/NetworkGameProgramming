@@ -17,7 +17,7 @@ CMainGame::CMainGame()
 	// 맵 정보를 받아온다.
 	CClientManager::Get_Instance()->recvInitMapTile();
 	// 몬스터 정보를 받아온다
-	CClientManager::Get_Instance()->recvInitMonster();
+	//CClientManager::Get_Instance()->recvInitMonster();
 }
 
 
@@ -32,7 +32,7 @@ void CMainGame::Initialize()
 	CBmpManager::Get_Instance()->Insert_Bmp(L"../Image/BackBuffer.bmp", L"BackBuffer");
 	m_DC = GetDC(g_hWnd);
 
-	CSoundMgr::Get_Instance()->Initialize();
+	//CSoundMgr::Get_Instance()->Initialize();
 	CSceneManager::Get_Instance()->Scene_Change(CSceneManager::SCENEID::SCENE_MENU);
 	CTileManager::Get_Instance()->Initialize();
 
@@ -43,11 +43,11 @@ void CMainGame::Initialize()
 void CMainGame::Update()
 {
 	if (CSceneManager::Get_Instance()->Get_CurScene() == CSceneManager::SCENEID::SCENE_STAGE_NETWORK) {
-		if (!m_bInitMonster) {
-			m_bInitMonster = true;
-			CClientManager::Get_Instance()->setGameStart();
-			CClientManager::Get_Instance()->InitMonster();
-		}
+		//if (!m_bInitMonster) {
+		//	m_bInitMonster = true;
+		//	CClientManager::Get_Instance()->setGameStart();
+		//	CClientManager::Get_Instance()->InitMonster();
+		//}
 	}
 	// 서버 통신
 	CClientManager::Get_Instance()->sendInfo();
@@ -87,7 +87,7 @@ void CMainGame::Release()
 	CTileManager::Destroy_Instance();
 
 	CObjManager::Destroy_Instance();
-	CSoundMgr::Destroy_Instance();
+	//CSoundMgr::Destroy_Instance();
 	CTimeManager::Destroy_Instance();
 
 	CClientManager::Destroy_Instance();

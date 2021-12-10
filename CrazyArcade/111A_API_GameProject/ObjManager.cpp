@@ -239,6 +239,12 @@ float CObjManager::Get_PlayerY()
 	}
 }
 
+RECT CObjManager::Get_PlayerSize()
+{
+	if (!m_listObj[OBJID::PLAYER].empty())
+		return dynamic_cast<CPlayer*>(m_listObj[OBJID::PLAYER].front())->Get_Rect();
+}
+
 float CObjManager::Get_BombX()
 {
 	for (auto& iter = m_listObj[OBJID::BOMB].begin(); iter != m_listObj[OBJID::BOMB].end(); ++iter)
@@ -733,7 +739,6 @@ void CObjManager::Update_NetWorkPlayer(CLIENTINFO _playerinfo)
 			player->Change_PosX(_playerinfo.PlayerInfo.PlayerPos.fX);
 			player->Change_PosY(_playerinfo.PlayerInfo.PlayerPos.fY);
 			player->SetCurDIR(_playerinfo.PlayerInfo.PlayerDir);
-
 		}
 	}
 }

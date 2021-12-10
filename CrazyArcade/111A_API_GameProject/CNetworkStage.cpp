@@ -157,13 +157,13 @@ void CNetworkStage::Update()
 		CObjManager::Get_Instance()->Set_Cheat(true);
 
 	CObjManager::Get_Instance()->Update();
-	if (CObjManager::Get_Instance()->Get_Stage1Clear() >= 10)
-	{
-		CSoundMgr::Get_Instance()->StopAll();
-		CSoundMgr::Get_Instance()->PlaySound(L"win.mp3", CSoundMgr::PLAYER_WIN);
-		CObjManager::Get_Instance()->Release();
-		CSceneManager::Get_Instance()->Scene_Change(CSceneManager::SCENE_STAGE2);
-	}
+	//if (CObjManager::Get_Instance()->Get_Stage1Clear() >= 10)
+	//{
+	//	CSoundMgr::Get_Instance()->StopAll();
+	//	CSoundMgr::Get_Instance()->PlaySound(L"win.mp3", CSoundMgr::PLAYER_WIN);
+	//	CObjManager::Get_Instance()->Release();
+	//	CSceneManager::Get_Instance()->Scene_Change(CSceneManager::SCENE_STAGE2);
+	//}
 }
 
 void CNetworkStage::Late_update()

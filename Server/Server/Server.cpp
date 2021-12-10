@@ -19,9 +19,6 @@ vector<CObj*>	vecMapTile;				// 맵 타일
 vector<USHORT> vecIsFirstConnect;		// 클라이언트가 접속하면 클라이언트의 포트번호를 저장함 (처음 접속인지 확인용)
 vector<MONSTERINFO>	vecMonster;
 
-HANDLE hRecvEvent;
-HANDLE hSendEvent;
-
 bool isStart = false;
 bool isSetTimer = false;
 #define SERVERPORT 9000
@@ -115,9 +112,6 @@ DWORD WINAPI ProcessClient(LPVOID arg)
 		// 맵 정보 전송 -> 클라이언트는 이 정보를 바탕으로 맵 초기화
 		Send_InitMap((LPVOID)client_sock);
 
-		// 몬스터 정보 전송
-		Init_Monster((LPVOID)client_sock);
-
 		printf("포트 번호=%d 에게 ClientID: %d 전송 성공\n", ntohs(clientaddr.sin_port), iClientID);
 
 		// 각 map에 insert
@@ -128,16 +122,11 @@ DWORD WINAPI ProcessClient(LPVOID arg)
 	}
 
 	while (1) {
-
-		// 몬스터 정보 업데이트
-		if (isStart)
-			CObjManager::Get_Instance()->Update_Monster();
-
 		// 데이터 받기
 		Receive_Data((LPVOID)client_sock, WorldInfo);
 
 		// 버프 확인
-		//CheckBuff();
+		CheckBuff();
 
 		// 데이터 보내기
 		Send_Data((LPVOID)client_sock);
@@ -190,13 +179,6 @@ int main(int argc, char* argv[])
 	int addrlen;
 	HANDLE hThread;
 
-	// 이벤트 생성
-	hRecvEvent = CreateEvent(NULL, FALSE, TRUE, NULL);		// 자동 리셋, 신호
-	if (hRecvEvent == NULL) return 1;
-
-	hSendEvent = CreateEvent(NULL, FALSE, TRUE, NULL);		// 자동 리셋, 비신호
-	if (hSendEvent == NULL) return 1;
-
 	while (1)
 	{
 		// accept()
@@ -218,10 +200,6 @@ int main(int argc, char* argv[])
 		if (hThread == NULL) { closesocket(client_sock); }
 		else { CloseHandle(hThread); }
 	}
-
-	// 이벤트 제거
-	CloseHandle(hRecvEvent);
-	CloseHandle(hSendEvent);
 
 	DeleteCriticalSection(&cs);
 
@@ -270,35 +248,6 @@ void Receive_Data(LPVOID arg, map<int, ClientInfo> _worldInfo)
 	// 받아온 데이터 map에 저장
 	auto iter = mapClientPort.find(clientaddr.sin_port);
 
-	// # 3. 몬스터 정보 
-	if (isStart) {
-		int iMonsterCnt = -1;
-		retval = recvn(client_sock, (char*)&iMonsterCnt, sizeof(int), 0);
-		if (retval == SOCKET_ERROR) {
-			err_display("recv()");
-		}
-
-		for (int i = 0; i < iMonsterCnt; ++i) {
-			retval = recvn(client_sock, (char*)&vecMonster[i], sizeof(MONSTERINFO), 0);
-			if (retval == SOCKET_ERROR) {
-				err_display("recv()");
-			}
-		}
-
-		list<CObj*> monsterList = CObjManager::Get_Instance()->Get_MonsterList();
-		int iNum = 0;
-		for (auto iter = monsterList.begin(); iter != monsterList.end(); ++iter) {
-			if (vecMonster[iNum].MonsterDead) {
-				vecMonster.erase(vecMonster.begin() + iNum);
-				SAFE_DELETE(*iter);
-				iter = monsterList.erase(iter);
-			}
-			++iNum;
-		}
-
-		CObjManager::Get_Instance()->Set_MonsterList(monsterList);
-	}
-
 	auto Portiter = mapClientPort.find(clientaddr.sin_port);
 	// WorldInfo의 ClientID 키값에 ClientInfo를 저장한다.
 	WorldInfo.insert({ Portiter->second, ClientInfo });
@@ -333,40 +282,14 @@ void Send_Data(LPVOID arg)
 		}
 	}
 
-	// 몬스터 부분
-	if (isStart) {
-		// 업데이트된 몬스터들 위치
-		list<CObj*>	listMonster = CObjManager::Get_Instance()->Get_MonsterList();
-		int iNum = 0, iSendCnt = 0;
-		int iCnt = listMonster.size();
-
-		for (auto iter = listMonster.begin(); iter != listMonster.end(); ++iter)
-		{
-			vecMonster[iNum].MonsterPos.fX = (*iter)->Get_Info().fX;
-			vecMonster[iNum].MonsterPos.fY = (*iter)->Get_Info().fY;
-			vecMonster[iNum].MonsterDir = (*iter)->GetDir();
-			vecMonster[iNum].Monsterframe = (*iter)->Get_Frame();
-			++iNum;
-		}
-
-		retval = send(client_sock, (char*)&iNum, sizeof(int), 0);
-		if (retval == SOCKET_ERROR) {
-			err_display("send()");
-		}
-
-		for (int i = 0; i < iNum; ++i) {
-			retval = send(client_sock, (char*)&vecMonster[i], sizeof(MONSTERINFO), 0);
-			if (retval == SOCKET_ERROR) {
-				err_display("send()");
-			}
-		}
-	}
-
 	LeaveCriticalSection(&cs);
 }
 
 void CheckBuff()
 {
+	// 접속한 플레이어가 2명 이상이 아니라면 return
+	if (WorldInfo.size() < 2) return;
+
 	// 모든 클라이언트에게 정보를 받은 후
 	// 모든 플레이어가 충돌했다면 PlayInfo 안의 b_isContactPlayer를 true로 설정
 	RECT rc = {};
@@ -391,7 +314,7 @@ void CheckBuff()
 	// 모든 플레이어가 충돌했다면 isBuffOn을 true로 설정
 	for (auto iter = mapIsCollision.begin(); iter != mapIsCollision.end(); ++iter)
 	{
-		if (iter->second)
+		if (!iter->second)
 		{
 			isBuffOn = false;
 			break;
@@ -409,6 +332,8 @@ void CheckBuff()
 
 		for (auto iter = mapIsCollision.begin(); iter != mapIsCollision.end(); ++iter)
 			iter->second = false;
+
+		isBuffOn = false;
 	}
 }
 
@@ -418,7 +343,7 @@ void Send_InitMap(LPVOID arg)
 	int retval;
 	char buf[BUFSIZE + 1];
 
-	ifstream    in{ "newTile2.dat", ios::in | ios::binary }; 
+	ifstream    in{ "newTile2.dat", ios::in | ios::binary };
 	if (!in) {
 		printf("파일 열기 실패\n");
 		exit(0);
