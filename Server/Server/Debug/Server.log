@@ -4,4 +4,25 @@ C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\Server\Server\Server.
 C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\Server\Server\stdafx.h(27): message : 'BUFSIZE'의 이전 정의를 참조하십시오.
 C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\Server\Server\Server.cpp(92,7): warning C4101: 'buf' :참조되지 않은 지역 변수입니다.
 C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\Server\Server\Server.cpp(432,12): warning C4244: '초기화 중': 'std::streamoff'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  LINK : ..\..\CrazyArcade\Debug\Server.exe을(를) 찾을 수 없거나 마지막 증분 링크에 의해 빌드되지 않았습니다. 전체 링크를 수행하고 있습니다.
+TimeManager.obj : warning LNK4099: 'vc142.pdb' PDB를 'TimeManager.obj' 또는 'C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\vc142.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+TileManager.obj : warning LNK4099: 'vc142.pdb' PDB를 'TileManager.obj' 또는 'C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\vc142.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Tile.obj : warning LNK4099: 'vc142.pdb' PDB를 'Tile.obj' 또는 'C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\vc142.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Skate.obj : warning LNK4099: 'vc142.pdb' PDB를 'Skate.obj' 또는 'C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\vc142.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Rock3.obj : warning LNK4099: 'vc142.pdb' PDB를 'Rock3.obj' 또는 'C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\vc142.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Rock2.obj : warning LNK4099: 'vc142.pdb' PDB를 'Rock2.obj' 또는 'C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\vc142.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Rock1.obj : warning LNK4099: '' PDB를 'Rock1.obj' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Potion.obj : warning LNK4099: 'vc142.pdb' PDB를 'Potion.obj' 또는 'C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\vc142.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Player.obj : warning LNK4099: 'vc142.pdb' PDB를 'Player.obj' 또는 'C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\vc142.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ObjManager.obj : warning LNK4099: 'vc142.pdb' PDB를 'ObjManager.obj' 또는 'C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\vc142.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Obj.obj : warning LNK4099: 'vc142.pdb' PDB를 'Obj.obj' 또는 'C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\vc142.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Messi.obj : warning LNK4099: 'vc142.pdb' PDB를 'Messi.obj' 또는 'C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\vc142.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Mbape.obj : warning LNK4099: 'vc142.pdb' PDB를 'Mbape.obj' 또는 'C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\vc142.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+MaxPotion.obj : warning LNK4099: 'vc142.pdb' PDB를 'MaxPotion.obj' 또는 'C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\vc142.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Leaf2.obj : warning LNK4099: 'vc142.pdb' PDB를 'Leaf2.obj' 또는 'C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\vc142.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Leaf1.obj : warning LNK4099: '' PDB를 'Leaf1.obj' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Grass.obj : warning LNK4099: 'vc142.pdb' PDB를 'Grass.obj' 또는 'C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\vc142.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Flower.obj : warning LNK4099: 'vc142.pdb' PDB를 'Flower.obj' 또는 'C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\vc142.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Basket.obj : warning LNK4099: 'vc142.pdb' PDB를 'Basket.obj' 또는 'C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\vc142.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Ballon.obj : warning LNK4099: 'vc142.pdb' PDB를 'Ballon.obj' 또는 'C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\vc142.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
   Server.vcxproj -> C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\Server.exe
