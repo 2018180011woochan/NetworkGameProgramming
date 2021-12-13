@@ -1,44 +1,7 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(499,5): warning MSB8004: Output 디렉터리가 슬래시로 끝나지 않습니다. Output 디렉터리의 적절한 평가를 허용하는 데 필요하므로 이 빌드 인스턴스에서 슬래시를 추가합니다.
-  Ballon.cpp
-  Basket.cpp
-  Flower.cpp
-  Grass.cpp
-  Leaf1.cpp
-  Leaf2.cpp
-  MaxPotion.cpp
-  Mbape.cpp
-  Messi.cpp
-  Obj.cpp
-  ObjManager.cpp
-C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\Server\Server\ObjManager.cpp(708,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-  Player.cpp
-  Potion.cpp
-  Rock1.cpp
-  Rock2.cpp
-  Rock3.cpp
   Server.cpp
-<<<<<<< HEAD
 C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\Server\Server\Server.cpp(11,1): warning C4005: 'BUFSIZE': 매크로 재정의
 C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\Server\Server\stdafx.h(27): message : 'BUFSIZE'의 이전 정의를 참조하십시오.
 C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\Server\Server\Server.cpp(92,7): warning C4101: 'buf' :참조되지 않은 지역 변수입니다.
-C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\Server\Server\Server.cpp(433,12): warning C4244: '초기화 중': 'std::streamoff'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Skate.cpp
-  Tile.cpp
-  TileManager.cpp
-C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\Server\Server\TileManager.cpp(77,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-  코드를 생성하고 있습니다...
-C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\Server\Server\ObjManager.cpp(234): warning C4715: 'CObjManager::Get_PlayerX': 모든 제어 경로에서 값을 반환하지는 않습니다.
-C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\Server\Server\ObjManager.cpp(242): warning C4715: 'CObjManager::Get_PlayerY': 모든 제어 경로에서 값을 반환하지는 않습니다.
-C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\Server\Server\ObjManager.cpp(752): warning C4715: 'CObjManager::Get_blockPosX': 모든 제어 경로에서 값을 반환하지는 않습니다.
-C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\Server\Server\ObjManager.cpp(763): warning C4715: 'CObjManager::Get_blockPosY': 모든 제어 경로에서 값을 반환하지는 않습니다.
-  컴파일하고 있습니다...
-  TimeManager.cpp
-  코드를 생성하고 있습니다...
+C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\Server\Server\Server.cpp(432,12): warning C4244: '초기화 중': 'std::streamoff'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   Server.vcxproj -> C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\Server.exe
-=======
-D:\학교\2021 2학기\네트워크 게임 프로그래밍\TermProject\Server\Server\Server.cpp(11,1): warning C4005: 'BUFSIZE': 매크로 재정의
-D:\학교\2021 2학기\네트워크 게임 프로그래밍\TermProject\Server\Server\stdafx.h(27): message : 'BUFSIZE'의 이전 정의를 참조하십시오.
-D:\학교\2021 2학기\네트워크 게임 프로그래밍\TermProject\Server\Server\Server.cpp(91,7): warning C4101: 'buf' :참조되지 않은 지역 변수입니다.
-D:\학교\2021 2학기\네트워크 게임 프로그래밍\TermProject\Server\Server\Server.cpp(352,12): warning C4244: '초기화 중': 'std::streamoff'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Server.vcxproj -> D:\학교\2021 2학기\네트워크 게임 프로그래밍\TermProject\CrazyArcade\Debug\Server.exe
->>>>>>> e52550263e5dab2bbb96b4d204dfce9f5763f6c4

@@ -123,7 +123,7 @@ DWORD WINAPI ProcessClient(LPVOID arg)
 	}
 
 	while (1) {
-		SendCnt++;
+		//SendCnt++;
 		//if (SendCnt % 5 == 1) {
 			// 데이터 받기
 			Receive_Data((LPVOID)client_sock, WorldInfo);

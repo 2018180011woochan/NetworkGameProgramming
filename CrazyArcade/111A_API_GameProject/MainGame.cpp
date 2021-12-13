@@ -43,11 +43,11 @@ void CMainGame::Initialize()
 void CMainGame::Update()
 {
 	// 서버 통신
-	SendCnt++;
-	if (SendCnt % 5 == 1) {
+	//SendCnt++;
+	//if (SendCnt % 5 == 1) {
 		CClientManager::Get_Instance()->sendInfo();
 		CClientManager::Get_Instance()->recvInfo();
-	}
+	//}
 	CSceneManager::Get_Instance()->Update();
 
 	CClientManager::Get_Instance()->set_buffOn();
