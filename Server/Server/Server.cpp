@@ -25,7 +25,7 @@ bool isSetTimer = false;
 
 static int SendCnt = 0;
 
-//CRITICAL_SECTION cs;
+CRITICAL_SECTION cs;
 
 void Receive_Data(LPVOID arg, map<int, ClientInfo> _worldInfo);
 void Send_Data(LPVOID arg);
@@ -124,7 +124,7 @@ DWORD WINAPI ProcessClient(LPVOID arg)
 
 	while (1) {
 		//SendCnt++;
-		//if (SendCnt % 5 == 1) {
+		//if (SendCnt % 3 == 1) {
 			// 데이터 받기
 			Receive_Data((LPVOID)client_sock, WorldInfo);
 
@@ -147,7 +147,7 @@ DWORD WINAPI ProcessClient(LPVOID arg)
 
 int main(int argc, char* argv[])
 {
-	//InitializeCriticalSection(&cs);
+	InitializeCriticalSection(&cs);
 
 	int retval;
 
@@ -210,7 +210,7 @@ int main(int argc, char* argv[])
 	}
 
 
-	//DeleteCriticalSection(&cs);
+	DeleteCriticalSection(&cs);
 
 
 	closesocket(listen_sock);
@@ -223,7 +223,7 @@ int main(int argc, char* argv[])
 
 void Receive_Data(LPVOID arg, map<int, ClientInfo> _worldInfo)
 {
-	//EnterCriticalSection(&cs);
+	EnterCriticalSection(&cs);
 
 	// 연결된 클라이언트로부터 각 플레이어의 ClientInfo를 받는다.
 	SOCKET client_sock = (SOCKET)arg;
@@ -284,12 +284,12 @@ void Receive_Data(LPVOID arg, map<int, ClientInfo> _worldInfo)
 	WorldInfo.insert({ Portiter->second, ClientInfo });
 	WorldInfo[Portiter->second] = ClientInfo;
 
-	//LeaveCriticalSection(&cs);
+	LeaveCriticalSection(&cs);
 }
 
 void Send_Data(LPVOID arg)
 {
-	//EnterCriticalSection(&cs);
+	EnterCriticalSection(&cs);
 
 	SOCKET client_sock = (SOCKET)arg;
 	int retval;
@@ -361,7 +361,7 @@ void Send_Data(LPVOID arg)
 	CObjManager::Get_Instance()->Clear_DeadTile();
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 
-	//LeaveCriticalSection(&cs);
+	LeaveCriticalSection(&cs);
 
 }
 

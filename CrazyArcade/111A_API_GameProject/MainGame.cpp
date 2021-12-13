@@ -44,7 +44,7 @@ void CMainGame::Update()
 {
 	// 서버 통신
 	//SendCnt++;
-	//if (SendCnt % 5 == 1) {
+	//if (SendCnt % 3 == 1) {
 		CClientManager::Get_Instance()->sendInfo();
 		CClientManager::Get_Instance()->recvInfo();
 	//}
