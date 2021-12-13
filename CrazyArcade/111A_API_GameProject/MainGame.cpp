@@ -10,6 +10,8 @@
 #include "ClientManager.h"
 #include "TimeManager.h"
 
+static int SendCnt = 0;
+
 CMainGame::CMainGame()
 {
 	CClientManager::Get_Instance()->connectToServer();
@@ -41,9 +43,11 @@ void CMainGame::Initialize()
 void CMainGame::Update()
 {
 	// 서버 통신
-	CClientManager::Get_Instance()->sendInfo();
-	CClientManager::Get_Instance()->recvInfo();
-
+	SendCnt++;
+	if (SendCnt % 5 == 1) {
+		CClientManager::Get_Instance()->sendInfo();
+		CClientManager::Get_Instance()->recvInfo();
+	}
 	CSceneManager::Get_Instance()->Update();
 
 	CClientManager::Get_Instance()->set_buffOn();

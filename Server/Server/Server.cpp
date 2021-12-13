@@ -22,6 +22,9 @@ vector<USHORT> vecIsFirstConnect;		// Å¬¶óÀÌ¾ğÆ®°¡ Á¢¼ÓÇÏ¸é Å¬¶óÀÌ¾ğÆ®ÀÇ Æ÷Æ®¹øÈ
 bool isStart = false;
 bool isSetTimer = false;
 #define SERVERPORT 9000
+
+static int SendCnt = 0;
+
 //CRITICAL_SECTION cs;
 
 void Receive_Data(LPVOID arg, map<int, ClientInfo> _worldInfo);
@@ -120,15 +123,17 @@ DWORD WINAPI ProcessClient(LPVOID arg)
 	}
 
 	while (1) {
-		// µ¥ÀÌÅÍ ¹Ş±â
-		Receive_Data((LPVOID)client_sock, WorldInfo);
+		SendCnt++;
+		//if (SendCnt % 5 == 1) {
+			// µ¥ÀÌÅÍ ¹Ş±â
+			Receive_Data((LPVOID)client_sock, WorldInfo);
 
-		// ¹öÇÁ È®ÀÎ
-		CheckBuff();
+			// ¹öÇÁ È®ÀÎ
+			CheckBuff();
 
-		// µ¥ÀÌÅÍ º¸³»±â
-		Send_Data((LPVOID)client_sock);
-
+			// µ¥ÀÌÅÍ º¸³»±â
+			Send_Data((LPVOID)client_sock);
+		//}
 
 		CTimeManager::Get_Instance()->Update_CTimeManager();
 	}

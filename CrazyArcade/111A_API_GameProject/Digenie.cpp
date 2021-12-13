@@ -54,7 +54,7 @@ void CDigenie::Initialize()
 	m_tInfo.iHP = 1;
 	m_tInfo.iMaxBomb = 1;
 
-	m_tInfo.fSpeed = 0.5f;
+	m_tInfo.fSpeed = 2.f;
 	m_tInfo.bisDead = false;
 
 	m_eState = OBJSTATE::IDLE;

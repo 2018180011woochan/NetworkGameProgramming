@@ -332,7 +332,7 @@ void CClientManager::setPlayerInfo()
 	tClientInfo.PlayerInfo.PlayerState = CObjManager::Get_Instance()->Get_PlayerState();
 
 	// 플레이어 크기 저장
-	tClientInfo.PlayerInfo.PlayerSize = CObjManager::Get_Instance()->Get_PlayerSize();
+	//tClientInfo.PlayerInfo.PlayerSize = CObjManager::Get_Instance()->Get_PlayerSize();
 
 }
 
