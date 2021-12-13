@@ -867,6 +867,7 @@ void CObjManager::Update_NetWorkPlayer(CLIENTINFO& _playerinfo)
 			}
 			player->Change_PosX(_playerinfo.PlayerInfo.PlayerPos.fX);
 			player->Change_PosY(_playerinfo.PlayerInfo.PlayerPos.fY);
+
 			if (player->Get_ClientID() == 0) {
 				dynamic_cast<CBazzi*>(player)->SetPlayerDIR(_playerinfo.PlayerInfo.PlayerDir);
 				dynamic_cast<CBazzi*>(player)->SetPlayerState(_playerinfo.PlayerInfo.PlayerState);
@@ -879,6 +880,7 @@ void CObjManager::Update_NetWorkPlayer(CLIENTINFO& _playerinfo)
 				dynamic_cast<CDigenie*>(player)->SetPlayerDIR(_playerinfo.PlayerInfo.PlayerDir);
 				dynamic_cast<CDigenie*>(player)->SetPlayerState(_playerinfo.PlayerInfo.PlayerState);
 			}
+			//player->SetCurDIR(_playerinfo.PlayerInfo.PlayerDir);
 		}
 	}
 }
@@ -887,6 +889,7 @@ void CObjManager::Add_Bomb(OBJPOS _pos, int _bombPower, int id)
 {
 	CObj* pObj = nullptr;
 	pObj = CAbstractFactory<CBomb>::Create(_pos.fX, _pos.fY, _bombPower, false);
+
 	switch (id)
 	{
 	case 0:
@@ -931,3 +934,4 @@ bool CObjManager::Check_BlockState(int iNum)
 	else
 		return false;
 }
+

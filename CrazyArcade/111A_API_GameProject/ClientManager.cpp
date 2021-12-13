@@ -4,6 +4,7 @@
 #include "ObjManager.h"
 #include "Player.h"
 #include "SceneManager.h"
+#include "TimeManager.h"
 
 
 #define SERVERIP   "127.0.0.1"
@@ -102,6 +103,7 @@ int CClientManager::sendInfo()
 	vector<int>	vecTileKey = CTileManager::Get_Instance()->Get_vecCollTileKey();
 	int	nSize = vecTileKey.size();
 	retval = send(sock, (char*)&nSize, sizeof(int), 0);
+
 	if (retval == SOCKET_ERROR) {
 		err_display("send()");
 	}
@@ -138,6 +140,7 @@ int CClientManager::recvInfo()
 	}
 	//
 
+
 	for (int i = 0; i < AllClientNum; ++i)
 	{
 		ZeroMemory(&tClientInfo, sizeof(CLIENTINFO));
@@ -145,10 +148,12 @@ int CClientManager::recvInfo()
 		if (retval == SOCKET_ERROR) {
 			err_display("recv()");
 		}
+
 		//cout << "접속한 클라이언트 수 : " << AllClientNum << endl;
 		//cout << "Player" << tClientInfo.ClientID << "-> X:" << tClientInfo.PlayerInfo.PlayerPos.fX
 		//	<< " Y:" << tClientInfo.PlayerInfo.PlayerPos.fY << endl;
 		//cout << "-------------------------------------------" << endl;
+
 		tWorldInfo.insert({ tClientInfo.ClientID, tClientInfo });
 		tWorldInfo[tClientInfo.ClientID] = tClientInfo;
 
@@ -220,6 +225,7 @@ int CClientManager::recvInfo()
 		}
 	}
 
+
 	return retval;
 }
 
@@ -231,6 +237,36 @@ void CClientManager::applyInfo()
 
 void CClientManager::set_buffOn()
 {
+	if (tClientInfo.PlayerInfo.b_isContactPlayer) {
+		isBuff = true;
+		if (isInit) {
+			OriginalBombPower = CObjManager::Get_Instance()->Get_Player()->Get_Info().iBombPower;
+			OriginalSpeed = CObjManager::Get_Instance()->Get_Player()->Get_Info().fSpeed;
+			isInit = false;
+		}
+	}
+
+	if (isBuff) {
+		dBuffTime += CTimeManager::Get_Instance()->Get_DeltaTime();
+
+		if (dBuffTime > 1.0 && dBuffTime <= 5.0) {
+			// 버프 on - 스피드, 물줄기 최대치
+			dynamic_cast<CPlayer*>(CObjManager::Get_Instance()->Get_Player())->Set_PlayerSpeed(5.f);    // 최고속도 몰라서 임시로 넣어둠
+			dynamic_cast<CPlayer*>(CObjManager::Get_Instance()->Get_Player())->Set_PlayerBombMax();
+		}
+
+		else if (dBuffTime > 5.0) {
+			dynamic_cast<CPlayer*>(CObjManager::Get_Instance()->Get_Player())->SetBombPower(OriginalBombPower);
+			dynamic_cast<CPlayer*>(CObjManager::Get_Instance()->Get_Player())->Set_PlayerSpeed(3.f);
+
+			isBuff = false;
+			isInit = true;
+			tClientInfo.PlayerInfo.b_isContactPlayer = false;
+			dBuffTime = 0.0;
+		}
+	}
+
+
 }
 
 void CClientManager::recvInitPlayerPos()
@@ -239,8 +275,6 @@ void CClientManager::recvInitPlayerPos()
 	if (retval == SOCKET_ERROR) {
 		err_display("recv()");
 	}
-
-
 }
 
 void CClientManager::recvInitMapTile()
@@ -293,8 +327,13 @@ void CClientManager::setPlayerInfo()
 	tClientInfo.BombPos.fX = CObjManager::Get_Instance()->Get_BombX();
 	tClientInfo.BombPos.fY = CObjManager::Get_Instance()->Get_BombY();
 
+
 	// 플레이어 상태 저장
 	tClientInfo.PlayerInfo.PlayerState = CObjManager::Get_Instance()->Get_PlayerState();
+
+	// 플레이어 크기 저장
+	tClientInfo.PlayerInfo.PlayerSize = CObjManager::Get_Instance()->Get_PlayerSize();
+
 }
 
 void CClientManager::setPlayerPosToClientInfo(float fX, float fY)

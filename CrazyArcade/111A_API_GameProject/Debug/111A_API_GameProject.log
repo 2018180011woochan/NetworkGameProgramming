@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(499,5): warning MSB8004: Output 디렉터리가 슬래시로 끝나지 않습니다. Output 디렉터리의 적절한 평가를 허용하는 데 필요하므로 이 빌드 인스턴스에서 슬래시를 추가합니다.
   stdafx.cpp
   Ballon.cpp
@@ -113,3 +114,8 @@ C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\111A_API_
   코드를 생성하고 있습니다...
   LINK : ..\Debug\111A_API_GameProject.exe을(를) 찾을 수 없거나 마지막 증분 링크에 의해 빌드되지 않았습니다. 전체 링크를 수행하고 있습니다.
   111A_API_GameProject.vcxproj -> C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\111A_API_GameProject.exe
+=======
+﻿  ClientManager.cpp
+D:\학교\2021 2학기\네트워크 게임 프로그래밍\TermProject\CrazyArcade\111A_API_GameProject\ClientManager.cpp(321,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  111A_API_GameProject.vcxproj -> D:\학교\2021 2학기\네트워크 게임 프로그래밍\TermProject\CrazyArcade\Debug\111A_API_GameProject.exe
+>>>>>>> e52550263e5dab2bbb96b4d204dfce9f5763f6c4

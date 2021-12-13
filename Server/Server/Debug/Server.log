@@ -17,6 +17,7 @@ C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\Server\Server\ObjMana
   Rock2.cpp
   Rock3.cpp
   Server.cpp
+<<<<<<< HEAD
 C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\Server\Server\Server.cpp(11,1): warning C4005: 'BUFSIZE': 매크로 재정의
 C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\Server\Server\stdafx.h(27): message : 'BUFSIZE'의 이전 정의를 참조하십시오.
 C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\Server\Server\Server.cpp(92,7): warning C4101: 'buf' :참조되지 않은 지역 변수입니다.
@@ -34,3 +35,10 @@ C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\Server\Server\ObjMana
   TimeManager.cpp
   코드를 생성하고 있습니다...
   Server.vcxproj -> C:\Users\wc542\OneDrive\문서\6TeamNetworkGameProgramming\CrazyArcade\Debug\Server.exe
+=======
+D:\학교\2021 2학기\네트워크 게임 프로그래밍\TermProject\Server\Server\Server.cpp(11,1): warning C4005: 'BUFSIZE': 매크로 재정의
+D:\학교\2021 2학기\네트워크 게임 프로그래밍\TermProject\Server\Server\stdafx.h(27): message : 'BUFSIZE'의 이전 정의를 참조하십시오.
+D:\학교\2021 2학기\네트워크 게임 프로그래밍\TermProject\Server\Server\Server.cpp(91,7): warning C4101: 'buf' :참조되지 않은 지역 변수입니다.
+D:\학교\2021 2학기\네트워크 게임 프로그래밍\TermProject\Server\Server\Server.cpp(352,12): warning C4244: '초기화 중': 'std::streamoff'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Server.vcxproj -> D:\학교\2021 2학기\네트워크 게임 프로그래밍\TermProject\CrazyArcade\Debug\Server.exe
+>>>>>>> e52550263e5dab2bbb96b4d204dfce9f5763f6c4

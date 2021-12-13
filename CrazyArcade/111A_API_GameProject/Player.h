@@ -35,6 +35,7 @@ public:
 		m_tInfo.iMaxBomb += _ballonitem;
 	}
 	void Set_PlayerSpeed(int _skateitem) { m_tInfo.fSpeed += _skateitem; }
+	void Set_PlayerSpeed(float _fSpeed) { m_tInfo.fSpeed = _fSpeed; }
 	void Set_PlayerBombMax() { m_tInfo.iBombPower = 7; }
 	void Set_PlayerBombPower(int _potionitem) { m_tInfo.iBombPower += _potionitem; }
 

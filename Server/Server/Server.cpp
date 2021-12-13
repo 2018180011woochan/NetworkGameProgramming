@@ -19,9 +19,6 @@ vector<USHORT>	vecClientPort;
 vector<CObj*>	vecMapTile;				// 맵 타일
 vector<USHORT> vecIsFirstConnect;		// 클라이언트가 접속하면 클라이언트의 포트번호를 저장함 (처음 접속인지 확인용)
 
-HANDLE hRecvEvent;
-HANDLE hSendEvent;
-
 bool isStart = false;
 bool isSetTimer = false;
 #define SERVERPORT 9000
@@ -113,7 +110,6 @@ DWORD WINAPI ProcessClient(LPVOID arg)
 		// 맵 정보 전송 -> 클라이언트는 이 정보를 바탕으로 맵 초기화
 		Send_InitMap((LPVOID)client_sock);
 
-
 		printf("포트 번호=%d 에게 ClientID: %d 전송 성공\n", ntohs(clientaddr.sin_port), iClientID);
 
 		// 각 map에 insert
@@ -128,7 +124,7 @@ DWORD WINAPI ProcessClient(LPVOID arg)
 		Receive_Data((LPVOID)client_sock, WorldInfo);
 
 		// 버프 확인
-		//CheckBuff();
+		CheckBuff();
 
 		// 데이터 보내기
 		Send_Data((LPVOID)client_sock);
@@ -185,13 +181,6 @@ int main(int argc, char* argv[])
 	int addrlen;
 	HANDLE hThread;
 
-	// 이벤트 생성
-	hRecvEvent = CreateEvent(NULL, FALSE, TRUE, NULL);		// 자동 리셋, 신호
-	if (hRecvEvent == NULL) return 1;
-
-	hSendEvent = CreateEvent(NULL, FALSE, TRUE, NULL);		// 자동 리셋, 비신호
-	if (hSendEvent == NULL) return 1;
-
 	while (1)
 	{
 		// accept()
@@ -215,11 +204,9 @@ int main(int argc, char* argv[])
 		else { CloseHandle(hThread); }
 	}
 
-	// 이벤트 제거
-	CloseHandle(hRecvEvent);
-	CloseHandle(hSendEvent);
 
 	//DeleteCriticalSection(&cs);
+
 
 	closesocket(listen_sock);
 
@@ -285,6 +272,7 @@ void Receive_Data(LPVOID arg, map<int, ClientInfo> _worldInfo)
 		// 
 	}
 	//////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 	auto Portiter = mapClientPort.find(clientaddr.sin_port);
 	// WorldInfo의 ClientID 키값에 ClientInfo를 저장한다.
@@ -369,10 +357,14 @@ void Send_Data(LPVOID arg)
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//LeaveCriticalSection(&cs);
+
 }
 
 void CheckBuff()
 {
+	// 접속한 플레이어가 2명 이상이 아니라면 return
+	if (WorldInfo.size() < 2) return;
+
 	// 모든 클라이언트에게 정보를 받은 후
 	// 모든 플레이어가 충돌했다면 PlayInfo 안의 b_isContactPlayer를 true로 설정
 	RECT rc = {};
@@ -397,7 +389,7 @@ void CheckBuff()
 	// 모든 플레이어가 충돌했다면 isBuffOn을 true로 설정
 	for (auto iter = mapIsCollision.begin(); iter != mapIsCollision.end(); ++iter)
 	{
-		if (iter->second)
+		if (!iter->second)
 		{
 			isBuffOn = false;
 			break;
@@ -415,6 +407,8 @@ void CheckBuff()
 
 		for (auto iter = mapIsCollision.begin(); iter != mapIsCollision.end(); ++iter)
 			iter->second = false;
+
+		isBuffOn = false;
 	}
 }
 
