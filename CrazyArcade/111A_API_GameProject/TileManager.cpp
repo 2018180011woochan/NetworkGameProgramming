@@ -108,17 +108,12 @@ void CTileManager::Save_Tile()
 void CTileManager::Load_Tile()
 {
 	wchar_t pwstrName[100];
-	//char* fileName = "../111A_API_GameProject/Tile.dat";
 	int iLen = (int)strlen(m_fileName) + 1;
 	size_t con = 0;
 	mbstowcs_s(&con, pwstrName, m_fileName, iLen);
 
-	//HANDLE hFile = CreateFile(L"../Data/Tile.dat", GENERIC_READ
-	//	, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-
 	HANDLE hFile = CreateFile(pwstrName, GENERIC_READ
 		, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-
 	if (INVALID_HANDLE_VALUE == hFile)
 	{
 		MessageBox(g_hWnd, L"불러오기 실패", L"실패", MB_OK);
@@ -131,22 +126,16 @@ void CTileManager::Load_Tile()
 	INFO	tTemp = {};
 	int		iDrawID = 0;
 	int		iObjNum = 0;
-
 	while (true)
 	{
 		ReadFile(hFile, &tTemp, sizeof(INFO), &dwByte, NULL);
 		ReadFile(hFile, &iDrawID, sizeof(int), &dwByte, NULL);
-
 		if (0 == dwByte)
 			break;
 
 		CObj* pObj = CAbstractFactory<CTile>::Create(tTemp.fX, tTemp.fY);
 		dynamic_cast<CTile*>(pObj)->Set_TileKey(iDrawID);
-		//pObj->Set_ObjNum(iObjNum);
-
-
 		m_vecTile.emplace_back(pObj);
-		//++iObjNum;
 	}
 
 	for (int i = 0; i < m_vecTile.size(); ++i) {
@@ -155,7 +144,6 @@ void CTileManager::Load_Tile()
 	}
 
 	CloseHandle(hFile);
-	//MessageBox(g_hWnd, L"불러오기 성공", L"성공", MB_OK);
 }
 
 void CTileManager::SetTileBlockType(float _x, float _y, MAPBLOCK::BLOCK _block)

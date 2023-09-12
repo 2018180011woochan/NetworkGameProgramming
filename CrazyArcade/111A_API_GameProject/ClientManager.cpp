@@ -190,6 +190,7 @@ int CClientManager::recvInfo()
 				err_display("recv()");
 			}
 			CObjManager::Get_Instance()->Set_BlockBubble(vecDeadTileKey[i]);
+			CObjManager::Get_Instance()->Add_NoItemBlock(vecDeadTileKey[i]);
 		}
 	}
 
@@ -210,13 +211,6 @@ int CClientManager::recvInfo()
 				err_display("recv()");
 			}
 			CObjManager::Get_Instance()->Make_Add_Item(vecItem[i]);
-		}
-	}
-	if (nTileNum > 0) {
-		//vecDeadTileKey.resize(nTileNum);
-
-		for (int i = 0; i < nTileNum; ++i) {
-			CObjManager::Get_Instance()->Add_NoItemBlock(vecDeadTileKey[i]);
 		}
 	}
 
@@ -261,6 +255,7 @@ void CClientManager::recvInitMapTile()
 	pName[iNameLen] = '\0';
 
 
+	// 고정 - 파일 내용 크기
 	retval = recvn(sock, (char*)&iFileSize, sizeof(int), 0);
 	if (retval == SOCKET_ERROR) {
 		err_display("recv()");
@@ -268,11 +263,13 @@ void CClientManager::recvInitMapTile()
 
 	char* fileD = new char[iFileSize];
 
+	// 가변 - 파일 내용
 	retval = recvn(sock, &fileD[0], iFileSize, 0);
 	if (retval == SOCKET_ERROR) {
 		err_display("recv()");
 	}
 
+	// 파일을 저장한다.
 	std::ofstream    out{ pName, std::ios::out };
 	out.write(&fileD[0], iFileSize);
 

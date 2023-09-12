@@ -257,6 +257,9 @@ void Receive_Data(LPVOID arg, map<int, ClientInfo> _worldInfo)
 	auto iter = mapClientPort.find(clientaddr.sin_port);
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////
+	
+
+
 	// # 4. 변화된 타일 정보
 	int nTileCnt = -1;
 	retval = recvn(client_sock, (char*)&nTileCnt, sizeof(int), 0);
@@ -273,6 +276,7 @@ void Receive_Data(LPVOID arg, map<int, ClientInfo> _worldInfo)
 			if (retval == SOCKET_ERROR) {
 				err_display("recv()");
 			}
+
 			// 버블 상태가 될 블럭의 오브젝트num을 받아와서 저장
 			CObjManager::Get_Instance()->Add_CollBlock(vecTileKey[i]);
 
@@ -282,8 +286,9 @@ void Receive_Data(LPVOID arg, map<int, ClientInfo> _worldInfo)
 
 		// 아이템 생성
 		CObjManager::Get_Instance()->Make_Item();
-		// 
 	}
+
+
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 
 	auto Portiter = mapClientPort.find(clientaddr.sin_port);
@@ -328,6 +333,8 @@ void Send_Data(LPVOID arg)
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////
+	
+
 	// 맵 블럭
 	vector<int>	vecDeadTileKey = CObjManager::Get_Instance()->Get_DeadTile();
 	int	iTileNum = vecDeadTileKey.size();
@@ -366,6 +373,8 @@ void Send_Data(LPVOID arg)
 	}
 
 	CObjManager::Get_Instance()->Clear_DeadTile();
+
+
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//LeaveCriticalSection(&cs);
